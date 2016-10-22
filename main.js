@@ -5,19 +5,18 @@ var express = require('express');
 var exapp = express();
 var eleapp = electron.app;
 var BrowserWindow = electron.BrowserWindow;
+var bodyParser = require('body-parser');
 var logger = require('morgan');
 var path = require('path');
 
-//var mainPage = require('.routes/mainPage');
+var mainPage = require('./routes/mainPage');
 
-exapp.set('views', path.join(__dirname + '/view'));
-exapp.set('view engine', 'ejs');
-
+exapp.use(bodyParser.json());
+exapp.use(bodyParser.urlencoded({ extended : true }));
 exapp.use(logger('dev'));
-exapp.use(express.static(__dirname + '/view'));
 exapp.use(express.static(path.join(__dirname, 'public')));
 
-//exapp.use('/main', mainPage);
+exapp.use('/mainPage', mainPage);
 
 exapp.listen(3000);
 console.log('server starting...');
@@ -41,7 +40,7 @@ eleapp.on('ready', function() {
         // "show": false,         // アプリ起動時にウィンドウを表示しない
         // "skip-taskbar": true,   // タスクバーに表示しない
   });
-  mainWindow.loadURL('file://' + __dirname + '/view/index.ejs');
+  mainWindow.loadURL('http://localhost:3000/mainPage');
 
   mainWindow.on('closed', function() {
     mainWindow = null;
