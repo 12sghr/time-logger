@@ -11,9 +11,13 @@ var path = require('path');
 
 var mainPage = require('./routes/mainPage');
 
+exapp.set('views', path.join(__dirname + '/view'));
+exapp.set('view engine', 'ejs');
+
 exapp.use(bodyParser.json());
 exapp.use(bodyParser.urlencoded({ extended : true }));
 exapp.use(logger('dev'));
+exapp.use(express.static(__dirname + '/view'));
 exapp.use(express.static(path.join(__dirname, 'public')));
 
 exapp.use('/mainPage', mainPage);
