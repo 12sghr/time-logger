@@ -6,17 +6,26 @@
     </head>
     <body>
       <h1>Time Logger</h1>
-        <form action="/mainPage" method="post">
-          <input placeholder="やることを入力" name="doing_thing" type="text"></input>
-          <button type="submit">はじめる！</button>
-        </form>
-        <% if(typeof title !== 'undefined'){ %>
-          <div>
-            <%= title %>
-          </div>
+        <% if(result !== null){ %>
+          <% if(isEnd === true){ %>
+            <form action="/mainPage" method="post">
+              <input placeholder="やることを入力" name="doing_thing" type="text"></input>
+              <button type="submit">はじめる！</button>
+            </form>
+          <% } else { %>
+            実行中...... : <%= result[0].title %>
+            <form action="/mainPage/end" method="post">
+              <button type="submit">おわった</button>
+            </form>
+          <% } %>
+        <% } else { %><!-- 初期状態の時　いい感じに上とまとめられる if が思いつかない -->
+          <form action="/mainPage" method="post">
+            <input placeholder="やることを入力" name="doing_thing" type="text"></input>
+            <button type="submit">はじめる！</button>
+          </form>
         <% } %>
-        <% if(typeof result !== 'undefined'){ %>
-          <% for(var i = 0; i < result.length; i++){ %>
+        <% if(result !== null){ %>
+          <% for(var i = 2; i < result.length; i++){ %>
             <div>
               <%= result[i].title %>
             </div>

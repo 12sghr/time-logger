@@ -4,6 +4,8 @@ var request = require('request');
 
 var router = express.Router();
 
+var endTaskId;
+
 router.get('/', (req, res) => {
   var url = 'http://localhost:9090/mainPage';
   (() => {
@@ -30,8 +32,16 @@ router.get('/', (req, res) => {
     return promise;
   })().then((result) => {
     console.log(result);
+    var isEnd = true;
+    if(result !== null){
+      if(result[0].end == 0){
+        isEnd = false;
+        endTaskId = result[0].taskId;
+      }
+    }
     res.render('mainPage.ejs', {
       result,
+      isEnd,
     });
   });
 });
@@ -45,6 +55,16 @@ router.post('/', (req, res) => {
   request.post(options, (error, response, body) => {
     console.log(response.body.title);
     res.redirect('/mainPage');
+  });
+});
+
+router.post('/end', (req, res) => {
+  var options = {
+    uri: 'http://localhost:9090/mainPage/end',
+    form: { task_id: endTaskId }
+  }
+  request.post(options, (error, response, body) => {
+    res.redirect('/mainPage')
   });
 });
 
