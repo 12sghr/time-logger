@@ -10,6 +10,18 @@
           <input placeholder="やることを入力" name="doing_thing" type="text"></input>
           <button type="submit">はじめる！</button>
         </form>
+        <% if(typeof title !== 'undefined'){ %>
+          <div>
+            <%= title %>
+          </div>
+        <% } %>
+        <% if(typeof result !== 'undefined'){ %>
+          <% for(var i = 0; i < result.length; i++){ %>
+            <div>
+              <%= result[i].title %>
+            </div>
+          <% } %>
+        <% } %>
     </body>
     <script>
     window.onload = function () {
