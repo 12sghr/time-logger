@@ -12,11 +12,21 @@
               <input placeholder="やることを入力" name="doing_thing" type="text"></input>
               <button type="submit">はじめる！</button>
             </form>
+            <% for(var i = 0; i < result.length; i++){ %>
+              <div>
+                <%= result[i].title %>
+              </div>
+            <% } %>
           <% } else { %>
             実行中...... : <%= result[0].title %>
             <form action="/mainPage/end" method="post">
               <button type="submit">おわった</button>
             </form>
+            <% for(var i = 1; i < result.length; i++){ %>
+              <div>
+                <%= result[i].title %>
+              </div>
+            <% } %>
           <% } %>
         <% } else { %><!-- 初期状態の時　いい感じに上とまとめられる if が思いつかない -->
           <form action="/mainPage" method="post">
@@ -24,13 +34,13 @@
             <button type="submit">はじめる！</button>
           </form>
         <% } %>
-        <% if(result !== null){ %>
+        <!-- <% if(result !== null){ %>
           <% for(var i = 2; i < result.length; i++){ %>
             <div>
               <%= result[i].title %>
             </div>
           <% } %>
-        <% } %>
+        <% } %> -->
     </body>
     <script>
     window.onload = function () {
