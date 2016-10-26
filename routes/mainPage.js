@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
           ret = JSON.parse(body);
           //console.log(ret);
           result = ret;
-          console.log(result);
+          //console.log(result);
           resolve(result);
         });
       }).on('error', function(e){
@@ -53,7 +53,7 @@ router.post('/', (req, res) => {
     json: true
   };
   request.post(options, (error, response, body) => {
-    console.log(response.body.title);
+    //console.log(response.body.title);
     res.redirect('/mainPage');
   });
 });
