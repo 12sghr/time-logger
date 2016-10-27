@@ -4,7 +4,7 @@ var request = require('request');
 
 var router = express.Router();
 
-var endTaskId;
+var workingTaskId;
 
 router.get('/', (req, res) => {
   var url = 'http://localhost:9090/mainPage';
@@ -32,11 +32,13 @@ router.get('/', (req, res) => {
     return promise;
   })().then((result) => {
     console.log(result);
-    var isEnd = true;
+    var isEnd;
     if(result !== null){
       if(result[0].end == 0){
         isEnd = false;
-        endTaskId = result[0].taskId;
+        workingTaskId = result[0].taskId;
+      } else {
+        isEnd = true;
       }
     }
     res.render('mainPage.ejs', {
@@ -61,7 +63,7 @@ router.post('/', (req, res) => {
 router.post('/end', (req, res) => {
   var options = {
     uri: 'http://localhost:9090/mainPage/end',
-    form: { task_id: endTaskId }
+    form: { task_id: workingTaskId }
   }
   request.post(options, (error, response, body) => {
     res.redirect('/mainPage')
