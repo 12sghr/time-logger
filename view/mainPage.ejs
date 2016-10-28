@@ -4,35 +4,71 @@
       <meta charset="utf-8">
       <title>Time Logger</title>
     </head>
+    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+    <script src="semantic/dist/semantic.min.js"></script>
+    <style>
+      body{
+        margin: 50px;
+      }
+      .button{
+        position: relative;
+        left: 150px;
+        margin-top: 10px;
+      }
+      .form{
+        width: 400px;
+      }
+      .list{
+        width: 400px;
+      }
+    </style>
     <body>
       <h1>Time Logger</h1>
         <% if(result !== null){ %>
           <% if(isEnd === true){ %>
             <form action="/mainPage" method="post">
-              <input placeholder="やることを入力" name="doing_thing" type="text"></input>
-              <button type="submit">はじめる！</button>
-            </form>
-            <% for(var i = 0; i < result.length; i++){ %>
-              <div>
-                <%= result[i].title %>
-                <%= result[i].longDays %>日
-                <%= result[i].longHours %>時間
-                <%= result[i].longMinutes %>分
+              <div class="ui form">
+                <div class="field">
+                  <label>Task</label>
+                  <input placeholder="やることを入力" name="doing_thing" type="text"></input>
+                  <button type="submit" class="ui button green">はじめる！</button>
+                </div>
               </div>
-            <% } %>
+            </form>
+            <div class="ui celled list">
+              <% for(var i = 0; i < result.length; i++){ %>
+                <div class="item">
+                  <div class="content">
+                    <div class="header"><%= result[i].title %></div>
+                    <%= result[i].longDays %>日
+                    <%= result[i].longHours %>時間
+                    <%= result[i].longMinutes %>分
+                  </div>
+                </div>
+              <% } %>
+            </div>
           <% } else { %>
-            実行中...... : <%= result[0].title %>
-            <form action="/mainPage/end" method="post">
-              <button type="submit">おわった</button>
-            </form>
-            <% for(var i = 1; i < result.length; i++){ %>
-              <div>
-                <%= result[i].title %>
-                <%= result[i].longDays %>日
-                <%= result[i].longHours %>時間
-                <%= result[i].longMinutes %>分
+            <div class="ui segment">
+              <div class="ui active inverted dimmer">
+                <div class="ui mini text loader">実行中......</div>
               </div>
-            <% } %>
+              <p><%= result[0].title %></p>
+            </div>
+            <form action="/mainPage/end" method="post">
+              <button type="submit" class="ui button green">おわった</button>
+            </form>
+            <div class="ui celled list">
+              <% for(var i = 1; i < result.length; i++){ %>
+                <div class="item">
+                  <div class="content">
+                    <div class="header"><%= result[i].title %></div>
+                    <%= result[i].longDays %>日
+                    <%= result[i].longHours %>時間
+                    <%= result[i].longMinutes %>分
+                  </div>
+                </div>
+              <% } %>
+            </div>
           <% } %>
         <% } else { %><!-- 初期状態の時　いい感じに上とまとめられる if が思いつかない -->
           <form action="/mainPage" method="post">

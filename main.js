@@ -36,7 +36,7 @@ eleapp.on('ready', function() {
 
   // ブラウザ(Chromium)の起動, 初期画面のロード
   mainWindow = new BrowserWindow({
-        "width": 800,
+        "width": 500,
         "height": 600,
         // "transparent": true,    // ウィンドウの背景を透過
         // "frame": false,     // 枠の無いウィンドウ
